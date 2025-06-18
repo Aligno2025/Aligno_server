@@ -64,14 +64,15 @@ app.use('/api/auth', authRoutes);
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-if (!uri) {
-  console.error('❌ MONGO_URI is undefined. Did you set it in Railway Environment Variables?');
-  process.exit(1);
-}
+
 
 
 const uri = "mongodb+srv://Adebayo:<Gbola51389@cluster0.fyd7gun.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
+if (!uri) {
+  console.error('❌ MONGO_URI is undefined. Did you set it in Railway Environment Variables?');
+  process.exit(1);
+}
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
