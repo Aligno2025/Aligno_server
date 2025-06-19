@@ -5,7 +5,6 @@ dotenv.config();
 // Imports
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -26,26 +25,6 @@ app.get('/', (req, res) => {
   res.send('✅ Server is up and running!');
 });
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', uptime: process.uptime() });
-});
-
-// Auth middleware
-const authenticate = (req, res, next) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json({ message: 'Unauthorized' });
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: 'Token invalid or expired' });
-    req.user = decoded;
-    next();
-  });
-};
-
-// Authenticated route
-app.get('/protected', authenticate, (req, res) => {
-  res.json({ message: `Welcome, ${req.user.email}!` });
-});
 
 // Routes
 const authRoutes = require('./auth');
