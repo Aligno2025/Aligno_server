@@ -41,6 +41,8 @@ const MONGO_URI = process.env.MONGO_URI;
 // }
 
 // const uri = "mongodb+srv://Adebayo:Gbola51389@cluster0.fyd7gun.mongodb.net/user-auth?retryWrites=true&w=majority&appName=Cluster0";
+console.log('MONGO_URI:', MONGO_URI);
+console.log('authRoutes loaded:', typeof authRoutes === 'function' || typeof authRoutes === 'object');
 
 mongoose.connect(MONGO_URI)
 .then(() => {
