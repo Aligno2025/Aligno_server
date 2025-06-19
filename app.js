@@ -14,6 +14,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.options('*', cors());
 
 app.use(cors({
   origin: 'https://alignoteam99.netlify.app',
