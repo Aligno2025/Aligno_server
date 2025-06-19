@@ -60,7 +60,9 @@ const MONGO_URI = process.env.MONGO_URI;
 //   process.exit(1);
 // }
 
-mongoose.connect("mongodb+srv://Adebayo:Gbola51389@cluster0.fyd7gun.mongodb.net/user-auth?retryWrites=true&w=majority")
+// const uri = "mongodb+srv://Adebayo:Gbola51389@cluster0.fyd7gun.mongodb.net/user-auth?retryWrites=true&w=majority&appName=Cluster0";
+
+mongoose.connect(MONGO_URI)
 .then(() => {
   console.log('✅ Connected to MongoDB via Mongoose');
   app.listen(PORT, () => {
