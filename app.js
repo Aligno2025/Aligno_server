@@ -23,7 +23,7 @@ app.use(cors({
 
 // Health routes
 app.get('/', (req, res) => {
-  res.send('✅ Server is up and running!');
+  res.send('Server is up and running!');
 });
 
 
@@ -38,11 +38,11 @@ const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
 .then(() => {
-  console.log('✅ Connected to MongoDB via Mongoose');
+  console.log('Connected to MongoDB via Mongoose');
   app.listen(PORT, () => {
-    console.log(`🚀 Server is running at http://localhost:${PORT}`);
+    console.log(`Server is running at http://localhost:${PORT}`);
   });
 })
 .catch(err => {
-  console.error('❌ MongoDB connection failed:', err.message);
+  console.error('MongoDB connection failed:', err.message);
 });
