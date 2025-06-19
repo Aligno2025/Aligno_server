@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.options('*', cors());
+
 
 app.use(cors({
   origin: 'https://alignoteam99.netlify.app',
@@ -32,7 +32,7 @@ const authRoutes = require('./auth');
 app.use('/api/auth', authRoutes);
 
 // MongoDB connection
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
 
 // if (!MONGO_URI) {
@@ -41,8 +41,7 @@ const MONGO_URI = process.env.MONGO_URI;
 // }
 
 // const uri = "mongodb+srv://Adebayo:Gbola51389@cluster0.fyd7gun.mongodb.net/user-auth?retryWrites=true&w=majority&appName=Cluster0";
-console.log('MONGO_URI:', MONGO_URI);
-console.log('authRoutes loaded:', typeof authRoutes === 'function' || typeof authRoutes === 'object');
+
 
 mongoose.connect(MONGO_URI)
 .then(() => {
