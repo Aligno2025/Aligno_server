@@ -13,7 +13,7 @@ const googleAuth = passport.authenticate('google', { scope: ['profile', 'email']
 
 // Google OAuth callback handler
 const googleCallback = [
-  passport.authenticate('google', { failureRedirect: 'https://alignoteam99.netlify.app/#/Sign_in' }),
+  passport.authenticate('google', { failureRedirect: 'https://alignoteam99.netlify.app/Sign_in' }),
   (req, res) => {
     const payload = {
       userId: req.user._id,
@@ -39,7 +39,7 @@ const googleCallback = [
     });
 
     // Redirect to frontend
-    res.redirect('https://alignoteam99.netlify.app/#/MainDash');
+    res.redirect('https://alignoteam99.netlify.app/MainDash');
   }
 ];
 
@@ -52,7 +52,7 @@ const twitterAuth = passport.authenticate('twitter', {
 // Twitter OAuth callback
 const twitterCallback = [
   passport.authenticate('twitter', {
-    failureRedirect: 'https://alignoteam99.netlify.app/#/Sign_in',
+    failureRedirect: 'https://alignoteam99.netlify.app/Sign_in',
   }),
   (req, res) => {
     const payload = {
@@ -77,7 +77,7 @@ const twitterCallback = [
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.redirect('https://alignoteam99.netlify.app/#/MainDash');
+    res.redirect('https://alignoteam99.netlify.app/MainDash');
   },
 ];
 

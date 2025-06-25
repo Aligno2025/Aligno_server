@@ -52,7 +52,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback',
+  callbackURL: 'https://alignoteam99.netlify.app/auth/google/callback',
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ email: profile.emails[0].value });
@@ -78,7 +78,7 @@ passport.use(new GoogleStrategy({
 passport.use(new TwitterStrategy({
   clientID: process.env.TWITTER_CLIENT_ID,
   clientSecret: process.env.TWITTER_CLIENT_SECRET,
-  callbackURL: '/auth/twitter/callback',
+  callbackURL: 'https://alignoteam99.netlify.app/auth/twitter/callback',
   scope: ['tweet.read', 'users.read', 'offline.access'], // Request email permission via portal
 }, async (accessToken, refreshToken, profile, done) => {
   try {

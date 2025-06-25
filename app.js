@@ -84,6 +84,9 @@ app.patch('/api/user/message', authenticate, async (req, res) => {
   }
 });
 
+if (!process.env.GOOGLE_CLIENT_ID) {
+  console.error("Missing GOOGLE_CLIENT_ID in environment variables");
+}
 
 // MongoDB connection
 const PORT = process.env.PORT || 5000;
