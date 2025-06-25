@@ -1,41 +1,3 @@
-// // passport.js
-// const passport = require('passport');
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const User = require('./user'); // adjust path // Adjust to your actual user model path
-
-// passport.serializeUser((user, done) => done(null, user.id));
-
-// passport.deserializeUser(async (id, done) => {
-//   const user = await User.findById(id);
-//   done(null, user);
-// });
-
-// passport.use(new GoogleStrategy({
-//   clientID: process.env.GOOGLE_CLIENT_ID,
-//   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//   callbackURL: '/auth/google/callback',
-// }, async (accessToken, refreshToken, profile, done) => {
-//   try {
-//    let user = await User.findOne({ email: profile.emails[0].value });
-
-// if (!user) {
-//   user = await User.create({
-//     name: profile.displayName,
-//     email: profile.emails[0].value,
-//     googleId: profile.id,
-//   });
-// } else if (!user.googleId) {
-//   user.googleId = profile.id;
-//   await user.save();
-// }
-//     return done(null, user);
-//   } catch (err) {
-//     return done(err, null);
-//   }
-// }));
-// module.exports = passport;
-
-
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const TwitterStrategy = require('passport-twitter-oauth2').Strategy;
@@ -52,7 +14,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'https://alignoteam99.netlify.app/auth/google/callback',
+  callbackURL: 'https://aligno99.onrender.com/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ email: profile.emails[0].value });
@@ -78,7 +40,7 @@ passport.use(new GoogleStrategy({
 passport.use(new TwitterStrategy({
   clientID: process.env.TWITTER_CLIENT_ID,
   clientSecret: process.env.TWITTER_CLIENT_SECRET,
-  callbackURL: 'https://alignoteam99.netlify.app/auth/twitter/callback',
+  callbackURL: 'https://aligno99.onrender.com/auth/google/callback',
   scope: ['tweet.read', 'users.read', 'offline.access'], // Request email permission via portal
 }, async (accessToken, refreshToken, profile, done) => {
   try {
