@@ -69,10 +69,10 @@ app.use((err, req, res, next) => {
 
 app.patch('/api/user/message', authenticate, async (req, res) => {
   try {
-    const userId = req.user.id; // from JWT/session
+    const userEmail = req.user.email; // from JWT
     const { message } = req.body;
 
-    const user = await User.findById(userId);
+    const user = await User.findOne({ email: userEmail });
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     user.messages.push({ message });
@@ -84,6 +84,7 @@ app.patch('/api/user/message', authenticate, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 if (!process.env.GOOGLE_CLIENT_ID) {
   console.error("Missing GOOGLE_CLIENT_ID in environment variables");
