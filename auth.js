@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { register,
   login,
-  refreshTokens,
+  refresh,
   logout,
   apiSendGuestMessage
 } = require('./authController');
@@ -15,7 +15,7 @@ router.post('/register', register);
 // Login route
 router.post('/login', login);
 // Refresh token route
-router.post('/refresh', refreshTokens);
+router.post('/refresh', refresh);
 // Logout route
 router.post('/logout', logout);
 

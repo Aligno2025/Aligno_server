@@ -26,15 +26,15 @@ const googleCallback = [
     // Set tokens in cookies
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      sameSite: 'Lax',
-      secure: false, // Set to true in production (HTTPS)
+      sameSite: 'None',
+      secure: true, // Set to true in production (HTTPS)
       maxAge: 15 * 60 * 1000,
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      sameSite: 'Lax',
-      secure: false, // Set to true in production
+      sameSite: 'None',
+      secure: true, // Set to true in production
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -65,15 +65,15 @@ const twitterCallback = [
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      sameSite: 'Lax',
-      secure: false, // Set to true with HTTPS in production
+      sameSite: 'None',
+      secure: true, // Set to true with HTTPS in production
       maxAge: 15 * 60 * 1000,
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      sameSite: 'Lax',
-      secure: false,
+      sameSite: 'None',
+      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -139,7 +139,7 @@ const login = async (req, res) => {
           secure: true, // set to false if not using HTTPS
           maxAge: 15 * 60 * 1000, // 15 mins
         //   sameSite: 'Strict'
-        sameSite: process.env.CLIENT_ORIGIN === 'cross-domain' ? 'none' : 'strict',
+        sameSite: 'None',
         });
     
         res.cookie('refreshToken', refreshToken, {
@@ -147,7 +147,7 @@ const login = async (req, res) => {
           secure: true,
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         //   sameSite: 'Strict'
-        sameSite: process.env.CLIENT_ORIGIN === 'cross-domain' ? 'none' : 'strict',
+        sameSite: 'None',
         });
     
         res.status(200).json({ message: 'Login successful', accessToken });
@@ -182,7 +182,7 @@ const login = async (req, res) => {
 //   });
 // };
 
-const refreshTokens = async (req, res) => {
+const refresh = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
 
@@ -213,7 +213,7 @@ const refreshTokens = async (req, res) => {
     //   secure: process.env.NODE_ENV === 'production', // true in prod, false in dev
     //   path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: process.env.CLIENT_ORIGIN === 'cross-domain' ? 'none' : 'strict', // Dynamic SameSite
+      sameSite: none // Dynamic SameSite
     //   domain: 'https://alignoteam99.netlify.app' || undefined, // e.g., .yourdomain.com
     });
 
@@ -269,7 +269,7 @@ const apiSendGuestMessage = async (req, res) => {
 module.exports = {
   register,
   login,
-  refreshTokens,
+  refresh,
   logout,
   googleAuth,
   googleCallback,
