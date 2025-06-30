@@ -182,7 +182,7 @@ const login = async (req, res) => {
 //   });
 // };
 
-const refresh = async (req, res) => {
+const refreshTokens = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
 
@@ -213,7 +213,7 @@ const refresh = async (req, res) => {
     //   secure: process.env.NODE_ENV === 'production', // true in prod, false in dev
     //   path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: none // Dynamic SameSite
+      sameSite: 'None',
     //   domain: 'https://alignoteam99.netlify.app' || undefined, // e.g., .yourdomain.com
     });
 
@@ -269,7 +269,7 @@ const apiSendGuestMessage = async (req, res) => {
 module.exports = {
   register,
   login,
-  refresh,
+  refreshTokens,
   logout,
   googleAuth,
   googleCallback,
