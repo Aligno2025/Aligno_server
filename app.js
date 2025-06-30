@@ -24,9 +24,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 
+// const cors = require('cors'); // or import cors from 'cors';
+
 app.use(cors({
-  origin: 'https://alignoteam99.netlify.app',
-  // origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_ORIGIN,
   credentials: true
 }));
 

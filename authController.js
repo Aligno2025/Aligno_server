@@ -138,17 +138,19 @@ const login = async (req, res) => {
           httpOnly: true,
           secure: true, // set to false if not using HTTPS
           maxAge: 15 * 60 * 1000, // 15 mins
-          sameSite: 'Strict'
+        //   sameSite: 'Strict'
+        sameSite: process.env.CLIENT_ORIGIN === 'cross-domain' ? 'none' : 'strict',
         });
     
         res.cookie('refreshToken', refreshToken, {
           httpOnly: true,
           secure: true,
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-          sameSite: 'Strict'
+        //   sameSite: 'Strict'
+        sameSite: process.env.CLIENT_ORIGIN === 'cross-domain' ? 'none' : 'strict',
         });
     
-        res.status(200).json({ message: 'Login successful' });
+        res.status(200).json({ message: 'Login successful', accessToken });
       } catch (err) {
   console.error("LOGIN ERROR:", err); // <--- Add this
   res.status(500).json({ message: 'Server error.' });
@@ -208,11 +210,11 @@ const refreshTokens = async (req, res) => {
     const newRefreshToken = generateRefreshToken(payload); // Assume generateRefreshToken exists
     res.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // true in prod, false in dev
-      path: '/',
+    //   secure: process.env.NODE_ENV === 'production', // true in prod, false in dev
+    //   path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: process.env.CORS === 'cross-domain' ? 'none' : 'strict', // Dynamic SameSite
-      domain: 'https://alignoteam99.netlify.app' || undefined, // e.g., .yourdomain.com
+      sameSite: process.env.CLIENT_ORIGIN === 'cross-domain' ? 'none' : 'strict', // Dynamic SameSite
+    //   domain: 'https://alignoteam99.netlify.app' || undefined, // e.g., .yourdomain.com
     });
 
     // Set access token in response body (matches frontend expectation)
