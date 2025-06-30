@@ -157,30 +157,6 @@ const login = async (req, res) => {
 }
     };
 
-// const refreshTokens = async (req, res) => {
-//         const refreshToken = req.cookies.refreshToken;
-
-//   if (!refreshToken) return res.status(401).json({ message: 'No refresh token' });
-
-//   jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
-//     if (err) return res.status(403).json({ message: 'Invalid refresh token' });
-
-//     const payload = { userId: user.userId, email: user.email };
-//     const newAccessToken = generateAccessToken(payload);
-
-//     res.cookie('accessToken', newAccessToken, {
-//       httpOnly: true,
-//       secure: true,
-//       maxAge: 15 * 60 * 1000,
-//       sameSite: 'Strict'
-//     });
-
-//     res.status(200).json({
-//   message: 'Token refreshed',
-//   accessToken: newAccessToken
-// });
-//   });
-// };
 
 const refreshTokens = async (req, res) => {
   try {
@@ -198,9 +174,6 @@ const refreshTokens = async (req, res) => {
       });
     });
 
-    // Optional: Validate refresh token against database (if stored)
-    // Example: const storedToken = await db.findRefreshToken(refreshToken);
-    // if (!storedToken) return res.status(403).json({ message: 'Invalid refresh token' });
 
     // Generate new access token
     const payload = { userId: user.userId, email: user.email };
@@ -210,11 +183,8 @@ const refreshTokens = async (req, res) => {
     const newRefreshToken = generateRefreshToken(payload); // Assume generateRefreshToken exists
     res.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
-    //   secure: process.env.NODE_ENV === 'production', // true in prod, false in dev
-    //   path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       sameSite: 'None',
-    //   domain: 'https://alignoteam99.netlify.app' || undefined, // e.g., .yourdomain.com
     });
 
     // Set access token in response body (matches frontend expectation)
@@ -230,10 +200,19 @@ const refreshTokens = async (req, res) => {
 
 
 const logout = (req, res) => {
-     res.clearCookie('accessToken');
-  res.clearCookie('refreshToken');
+  res.clearCookie('accessToken', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+  });
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+  });
   res.status(200).json({ message: 'Logged out' });
 };
+
 
 
 const apiSendGuestMessage = async (req, res) => {

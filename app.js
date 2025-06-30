@@ -12,11 +12,12 @@ const { googleAuth, googleCallback } = require('./authController');
 const { twitterAuth, twitterCallback } = require('./authController');
 const authenticate = require('./authenticate'); // your JWT or session check
 const User = require('./user'); // Adjust to your actual user model path
-
 const app = express();
 
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 require('./passport');
 
 // Middleware
@@ -32,9 +33,18 @@ app.use(cors({
 }));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'yoursecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    collectionName: 'sessions',
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    secure: true,
+    sameSite: 'None',
+  }
 }));
 
 app.use(passport.initialize());
